@@ -6,7 +6,7 @@
 #    By: ybarbier <ybarbier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/03 11:35:46 by ybarbier          #+#    #+#              #
-#    Updated: 2014/11/10 16:40:31 by ybarbier         ###   ########.fr        #
+#    Updated: 2014/11/14 11:25:50 by ybarbier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ PATH_SRC = ./
 PATH_OBJ = ./
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -I ./includes/
 
 SRC = 	$(PATH_SRC)ft_strlen.c \
 		$(PATH_SRC)ft_strdup.c \
