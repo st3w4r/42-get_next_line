@@ -6,13 +6,13 @@
 /*   By: ybarbier <ybarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/10 18:05:23 by ybarbier          #+#    #+#             */
-/*   Updated: 2014/11/13 16:59:52 by ybarbier         ###   ########.fr       */
+/*   Updated: 2014/11/14 10:40:29 by ybarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static size_t		ft_len_c_stop(const char *str, int start, char c_stop)
+static size_t	ft_len_c_stop(const char *str, int start, char c_stop)
 {
 	size_t		counter;
 
@@ -27,7 +27,7 @@ static size_t		ft_len_c_stop(const char *str, int start, char c_stop)
 	return (counter);
 }
 
-static int ft_retln(char *str, char **line, t_data *data)
+static int		ft_retln(char *str, char **line, t_data *data)
 {
 	int len_str;
 
@@ -46,7 +46,7 @@ static int ft_retln(char *str, char **line, t_data *data)
 	return (0);
 }
 
-static int ft_read_line(int fd, char *buf, char **line, t_data *data)
+static int		ft_read_line(int fd, char *buf, char **line, t_data *data)
 {
 	int ret;
 
@@ -58,7 +58,6 @@ static int ft_read_line(int fd, char *buf, char **line, t_data *data)
 		return (1);
 	}
 	data->save_buf = ft_strdup("");
-
 	while ((ret = read(fd, buf, BUFF_SIZE)))
 	{
 		buf[ret] = 0;
@@ -76,10 +75,10 @@ static int ft_read_line(int fd, char *buf, char **line, t_data *data)
 	return (0);
 }
 
-int get_next_line(int const fd, char **line)
+int				get_next_line(int const fd, char **line)
 {
-	char *buf;
-	static t_data *data;
+	char			*buf;
+	static t_data	*data;
 
 	if (!data)
 		if ((data = (t_data*)malloc(sizeof(t_data))) == NULL)
