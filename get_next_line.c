@@ -6,7 +6,7 @@
 /*   By: ybarbier <ybarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/10 18:05:23 by ybarbier          #+#    #+#             */
-/*   Updated: 2014/11/14 10:40:29 by ybarbier         ###   ########.fr       */
+/*   Updated: 2014/11/14 19:58:05 by ybarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,28 @@ static size_t	ft_len_c_stop(const char *str, int start, char c_stop)
 
 static int		ft_retln(char *str, char **line, t_data *data)
 {
-	int len_str;
+	int		len_str;
+	char	*tmp;
+	char	*tmp_l;
 
 	len_str = 0;
 	if (ft_strchr(str, '\n') == 0)
 	{
-		*line = ft_strjoin(*line, str);
+		tmp_l = *line;
+		*line = ft_strjoin(tmp_l, str);
+		free(tmp_l);
 	}
 	else
 	{
 		len_str = ft_len_c_stop(str, 0, '\n');
-		*line = ft_strjoin(*line, ft_strsub(str, 0, len_str));
-		data->save_buf = ft_strsub(str, len_str + 1, ft_strlen(str) - len_str);
+		tmp = ft_strsub(str, 0, len_str);
+		tmp_l = *line;
+		*line = ft_strjoin(tmp_l, tmp);
+		free(tmp_l);
+		free(tmp);
+		tmp = ft_strsub(str, len_str + 1, ft_strlen(str) - len_str);
+		free(data->save_buf);
+		data->save_buf = tmp;
 		return (1);
 	}
 	return (0);
@@ -48,15 +58,14 @@ static int		ft_retln(char *str, char **line, t_data *data)
 
 static int		ft_read_line(int fd, char *buf, char **line, t_data *data)
 {
-	int ret;
+	int	ret;
 
+	ret = 0;
 	if (!(data->save_buf))
 		data->save_buf = ft_strdup("");
 	if (ft_retln(data->save_buf, line, data) == 1)
-	{
-		data->is_read = 1;
-		return (1);
-	}
+		return (data->is_read = 1);
+	free(data->save_buf);
 	data->save_buf = ft_strdup("");
 	while ((ret = read(fd, buf, BUFF_SIZE)))
 	{
@@ -78,6 +87,7 @@ static int		ft_read_line(int fd, char *buf, char **line, t_data *data)
 int				get_next_line(int const fd, char **line)
 {
 	char			*buf;
+	int				result;
 	static t_data	*data;
 
 	if (!data)
@@ -87,5 +97,12 @@ int				get_next_line(int const fd, char **line)
 		return (-1);
 	buf[0] = 0;
 	*line = ft_strdup("");
-	return (ft_read_line(fd, buf, line, data));
+	result = ft_read_line(fd, buf, line, data);
+	if ((result == 0) || (result == -1))
+	{
+		free(data->save_buf);
+		free(data);
+	}
+	free(buf);
+	return (result);
 }
