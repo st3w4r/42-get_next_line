@@ -6,7 +6,7 @@
 /*   By: ybarbier <ybarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/10 18:05:23 by ybarbier          #+#    #+#             */
-/*   Updated: 2014/11/14 10:40:29 by ybarbier         ###   ########.fr       */
+/*   Updated: 2014/11/17 13:59:23 by ybarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ int				get_next_line(int const fd, char **line)
 	char			*buf;
 	static t_data	*data;
 
+	if (!line)
+		return (-1);
 	if (!data)
 		if ((data = (t_data*)malloc(sizeof(t_data))) == NULL)
 			return (-1);
