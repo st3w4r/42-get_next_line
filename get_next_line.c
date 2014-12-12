@@ -7,6 +7,7 @@
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/10 18:05:23 by ybarbier          #+#    #+#             */
 /*   Updated: 2014/11/17 14:04:01 by ybarbier         ###   ########.fr       */
+/*   Updated: 2014/12/12 14:49:12 by ybarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +80,8 @@ static int		ft_read_line(int fd, char *buf, char **line, t_data *data)
 	if (data->is_read == 1)
 	{
 		data->is_read = 0;
-		return (1);
+		if (ft_strcmp("", *line) != 0)
+			return (1);
 	}
 	return (0);
 }
